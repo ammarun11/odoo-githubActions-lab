@@ -100,7 +100,7 @@ spec:
     - protocol: TCP
       port: 8069
       targetPort: 8069
-      nodePort: 30300
+      nodePort: 30100
 
 
 
