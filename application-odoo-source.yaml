@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/ammarun11/odoo-githubActions-lab.git
     targetRevision: HEAD
-    path: deployment
+    path: deployment-odoo-source
   destination: 
     server: https://kubernetes.default.svc
     namespace: odoo-lab

@@ -13,9 +13,9 @@ metadata:
   labels:
     app: postgres
 data:
-  ALLOW_EMPTY_PASSWORD: "yes"
-  POSTGRESQL_USERNAME: "bn_odoo"
-  POSTGRESQL_DATABASE: "bitnami_odoo"
+  POSTGRES_USER: "odoo"
+  POSTGRES_PASSWORD: "odoo"
+  POSTGRES_DB: "postgres"
 ---
 apiVersion: v1
 kind: PersistentVolume # Create a PV

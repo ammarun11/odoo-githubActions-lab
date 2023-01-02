@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: docker.io/bitnami/postgresql:13 # Sets Image
+          image: palopalepalo/postgresql:latest # Sets Image
           ports:
             - containerPort: 5432  # Exposes container port
           envFrom:
@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
       - name: odoo
-        image: docker.io/bitnami/odoo:14
+        image: palopalepalo/odoo:latest
         ports:
         - containerPort: 8069
         env:
@@ -76,16 +76,14 @@ spec:
         #   value: "yes"
         # - name: ODOO_DATABASE_ADMIN_PASSWORD
         #   value: bitnami
-        - name : ALLOW_EMPTY_PASSWORD
-          value : "yes"
-        - name : ODOO_DATABASE_HOST
-          value: "postgres"
-        - name : ODOO_DATABASE_PORT_NUMBER
-          value: "5432"
-        - name : ODOO_DATABASE_USER
-          value: "bn_odoo"
-        - name: ODOO_DATABASE_NAME
-          value: "bitnami_odoo"
+        # - name : ODOO_DATABASE_HOST
+        #   value: "postgres"
+        # - name : ODOO_DATABASE_PORT_NUMBER
+        #   value: "5432"
+        # - name : ODOO_DATABASE_USER
+        #   value: "bn_odoo"
+        # - name: ODOO_DATABASE_NAME
+        #   value: "bitnami_odoo"
 ---
 apiVersion: v1
 kind: Service
