@@ -21,7 +21,7 @@ data:
 apiVersion: v1
 kind: PersistentVolume # Create a PV
 metadata:
-  name: postgresql-data # Sets PV's name
+  name: postgresql-data-db # Sets PV's name
   namespace: odoo-lab
   labels:
     type: local # Sets PV's type to local
@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim # Create PVC
 metadata:
-  name: postgresql-data-claim # Sets name of PV
+  name: postgresql-data-db-claim # Sets name of PV
 namespace: odoo-lab
 spec:
   storageClassName: manual
@@ -76,7 +76,7 @@ spec:
       volumes:
         - name: postgredb
           persistentVolumeClaim:
-            claimName: postgresql-data-claim
+            claimName: postgresql-data-db-claim
 ---
 apiVersion: v1
 kind: Service
