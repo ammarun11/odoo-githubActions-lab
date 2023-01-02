@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -53,9 +53,9 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/
 RUN npm install -g rtlcss
 
 # Install Odoo
-ENV ODOO_VERSION 14.0
-ARG ODOO_RELEASE=20221005
-ARG ODOO_SHA=0b73069923e9be8f293b0344baacf39282bf2eb7
+ENV ODOO_VERSION 16.0
+ARG ODOO_RELEASE=20221226
+ARG ODOO_SHA=09e2bc4c27fc92a7f26928de61c122d18f550917
 RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
     && echo "${ODOO_SHA} odoo.deb" | sha1sum -c - \
     && apt-get update \
