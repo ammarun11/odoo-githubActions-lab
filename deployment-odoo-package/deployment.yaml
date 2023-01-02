@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres  # Sets Deployment name
+  namespace: odoo-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: docker.io/bitnami/postgresql:13 # Sets Image
+          ports:
+            - containerPort: 5432  # Exposes container port
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgresql-data-db-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres # Sets service name
+  namespace: odoo-lab
+  labels:
+    app: postgres # Labels and Selectors
+spec:
+  type: NodePort # Sets service type
+  ports:
+    - port: 5432 # Sets port to run the postgres application
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-deployment
+  namespace: odoo-lab
+  labels:
+    app: odoo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+    spec:
+      containers:
+      - name: odoo
+        image: docker.io/bitnami/odoo:14
+        ports:
+        - containerPort: 8069
+        env:
+        # - name: HOST
+        #   value: postgres
+        # - name: USER
+        #   value: admin
+        # - name: PASSWORD
+        #   value: bitnami
+        # - name: ALLOW_EMPTY_PASSWORD
+        #   value: "yes"
+        # - name: ODOO_DATABASE_ADMIN_PASSWORD
+        #   value: bitnami
+        - name : ALLOW_EMPTY_PASSWORD
+          value : "yes"
+        - name : ODOO_DATABASE_HOST
+          value: "postgres"
+        - name : ODOO_DATABASE_PORT_NUMBER
+          value: "5432"
+        - name : ODOO_DATABASE_USER
+          value: "bn_odoo"
+        - name: ODOO_DATABASE_NAME
+          value: "bitnami_odoo"
+---
+apiVersion: v1
+kind: Service
+metadata:    
+  name: odoo-service
+  namespace: odoo-lab
+spec:
+  type: NodePort
+  selector:
+    app: odoo
+  ports:
+    - protocol: TCP
+      port: 8069
+      targetPort: 8069
+      nodePort: 30100
+
+
+
+    
