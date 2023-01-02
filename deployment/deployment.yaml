@@ -1,7 +1,16 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: odoo-lab
+  labels:
+    name: odoo-lab
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
+  namespace: odoo-lab
   labels:
     app: postgres
 data:
@@ -13,6 +22,7 @@ apiVersion: v1
 kind: PersistentVolume # Create a PV
 metadata:
   name: postgresql-data # Sets PV's name
+  namespace: odoo-lab
   labels:
     type: local # Sets PV's type to local
 spec:
@@ -28,6 +38,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim # Create PVC
 metadata:
   name: postgresql-data-claim # Sets name of PV
+namespace: odoo-lab
 spec:
   storageClassName: manual
   accessModes:
@@ -40,6 +51,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres  # Sets Deployment name
+namespace: odoo-lab
 spec:
   replicas: 1
   selector:
@@ -70,6 +82,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres # Sets service name
+  namespace: odoo-lab
   labels:
     app: postgres # Labels and Selectors
 spec:
@@ -83,6 +96,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: odoo-deployment
+  namespace: odoo-lab
   labels:
     app: odoo
 spec:
@@ -101,6 +115,16 @@ spec:
         ports:
         - containerPort: 8069
         env:
+        # - name: HOST
+        #   value: postgres
+        # - name: USER
+        #   value: admin
+        # - name: PASSWORD
+        #   value: bitnami
+        # - name: ALLOW_EMPTY_PASSWORD
+        #   value: "yes"
+        # - name: ODOO_DATABASE_ADMIN_PASSWORD
+        #   value: bitnami
         - name : ALLOW_EMPTY_PASSWORD
           value : "yes"
         - name : ODOO_DATABASE_HOST
@@ -116,6 +140,7 @@ apiVersion: v1
 kind: Service
 metadata:    
   name: odoo-service
+  namespace: odoo-lab
 spec:
   type: NodePort
   selector:
