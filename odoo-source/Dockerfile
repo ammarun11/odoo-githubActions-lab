@@ -1,4 +1,6 @@
 FROM debian:bullseye-slim
+LABEL maintainer="ammarun"
+LABEL version="16"
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -64,13 +66,16 @@ RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/od
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 COPY ./odoo.conf /etc/odoo/
 
 # Set permissions and Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
-RUN chown odoo /etc/odoo/odoo.conf \
-    && mkdir -p /mnt/extra-addons \
-    && chown -R odoo /mnt/extra-addons
+RUN mkdir -p /mnt/extra-addons
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+
+RUN chown odoo:odoo /etc/odoo/odoo.conf \
+    && chown -R odoo:odoo /mnt/extra-addons \
+    && chown -R odoo:odoo /var/lib/odoo
 
 # Expose Odoo services
 EXPOSE 8069 8071 8072
@@ -79,12 +84,10 @@ EXPOSE 8069 8071 8072
 ENV ODOO_RC /etc/odoo/odoo.conf
 
 COPY wait-for-psql.py /usr/local/bin/wait-for-psql.py
-
-# Copy btech module to /mnt/extra-addons
-COPY ./module/ /mnt/extra-addons/
+RUN chmod +x /usr/local/bin/wait-for-psql.py
 
 # Set default user when running the container
 USER odoo
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["odoo"]
+CMD ["odoo", "-i base"]

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: palopalepalo/postgresql:latest # Sets Image
+          image: postgres:15.1-bullseye # Sets Image
           ports:
             - containerPort: 5432  # Exposes container port
           envFrom:
@@ -46,7 +46,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: odoo-deployment
+  name: odoo
   namespace: odoo-lab
   labels:
     app: odoo
@@ -61,29 +61,14 @@ spec:
         app: odoo
     spec:
       containers:
-      - name: odoo
-        image: palopalepalo/odoo:latest
-        ports:
-        - containerPort: 8069
-        env:
-        # - name: HOST
-        #   value: postgres
-        # - name: USER
-        #   value: admin
-        # - name: PASSWORD
-        #   value: bitnami
-        # - name: ALLOW_EMPTY_PASSWORD
-        #   value: "yes"
-        # - name: ODOO_DATABASE_ADMIN_PASSWORD
-        #   value: bitnami
-        # - name : ODOO_DATABASE_HOST
-        #   value: "postgres"
-        # - name : ODOO_DATABASE_PORT_NUMBER
-        #   value: "5432"
-        # - name : ODOO_DATABASE_USER
-        #   value: "bn_odoo"
-        # - name: ODOO_DATABASE_NAME
-        #   value: "bitnami_odoo"
+        - name: odoo
+          image: febryandana/odoo:16
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8069
+          envFrom:
+            - configMapRef:
+                name: odoo-config
 ---
 apiVersion: v1
 kind: Service
@@ -91,14 +76,14 @@ metadata:
   name: odoo-service
   namespace: odoo-lab
 spec:
-  type: NodePort
+  type: Loadbalancer
   selector:
     app: odoo
   ports:
     - protocol: TCP
       port: 8069
       targetPort: 8069
-      nodePort: 30100
+      # nodePort: 30100
 
 
 
