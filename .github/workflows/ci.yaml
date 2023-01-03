@@ -27,7 +27,7 @@ jobs:
       - name: Build Odoo image and push to Docker Hub
         uses: docker/build-push-action@v2
         with:
-          context: ./odoo
+          context: ./odoo-source
           tags: |
             palopalepalo/odoo:16
             palopalepalo/odoo:latest
@@ -36,7 +36,7 @@ jobs:
       # - name: Build Postgresql image and push to Docker Hub
       #   uses: docker/build-push-action@v2
       #   with:
-      #     context: ./odoo
+      #     context: ./odoo-source
       #     tags: |
       #       palopalepalo/postgresql:15.1
       #       palopalepalo/postgresql:latest
