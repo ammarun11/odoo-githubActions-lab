@@ -76,7 +76,7 @@ metadata:
   name: odoo-service
   namespace: odoo-lab
 spec:
-  type: Loadbalancer
+  type: LoadBalancer
   selector:
     app: odoo
   ports:
