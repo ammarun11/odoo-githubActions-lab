@@ -35,7 +35,8 @@ RUN apt-get update && \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
     && echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
-    && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
+    && rm -rf /var/lib/apt/lists/* wkhtmltox.deb \
+    pip3 install crontab
 
 # install latest postgresql-client
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
@@ -73,7 +74,7 @@ COPY ./odoo.conf /etc/odoo/
 RUN mkdir -p /mnt/extra-addons
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
-COPY ./module /mnt/extra-addons
+#COPY ./module /mnt/extra-addons
 RUN chown odoo:odoo /etc/odoo/odoo.conf \
     && chown -R odoo:odoo /mnt/extra-addons \
     && chown -R odoo:odoo /var/lib/odoo
