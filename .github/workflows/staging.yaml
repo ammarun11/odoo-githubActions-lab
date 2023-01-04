@@ -65,7 +65,7 @@ jobs:
         with:
           source_file: manifests
           destination_repo: ammarun11/odoo-githubActions-lab
-          destination_branch: staging
+          destination_branch: dev
           user_email: cintadamai46@gmail.com
           user_name: palopalepalo
           commit_message: Update k8s manifest image version to ${{ steps.get-version.outputs.VERSION }}
