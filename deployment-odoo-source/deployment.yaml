@@ -76,14 +76,14 @@ metadata:
   name: odoo-service
   namespace: odoo-lab
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: odoo
   ports:
     - protocol: TCP
       port: 8069
       targetPort: 8069
-      nodePort: 30100
+      # nodePort: 30100
 
 
 
