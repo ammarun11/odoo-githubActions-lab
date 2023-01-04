@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume # Create a PV
+metadata:
+  name: postgresql-data-db # Sets PV's name
+  namespace: odoo-ammar-stg
+  labels:
+    type: local # Sets PV's type to local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 3Gi # Sets PV Volume
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/db-ammar" # Sets the volume's path
+---
+apiVersion: v1
+kind: PersistentVolumeClaim # Create PVC
+metadata:
+  name: postgresql-data-db-claim # Sets name of PV
+  namespace: odoo-ammar-stg
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce # Sets read and write access
+  resources:
+    requests:
+      storage: 3Gi # Sets volume size
