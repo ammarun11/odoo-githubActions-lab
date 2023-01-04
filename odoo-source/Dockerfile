@@ -1,5 +1,5 @@
 FROM debian:bullseye-slim
-LABEL maintainer="ammarun"
+LABEL maintainer="naufalamamrun11@gmail.com"
 LABEL version="16"
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
@@ -73,6 +73,7 @@ COPY ./odoo.conf /etc/odoo/
 RUN mkdir -p /mnt/extra-addons
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
+COPY ./module/ /mnt/extra-addons/
 RUN chown odoo:odoo /etc/odoo/odoo.conf \
     && chown -R odoo:odoo /mnt/extra-addons \
     && chown -R odoo:odoo /var/lib/odoo
