@@ -43,6 +43,7 @@ spec:
     storage: 3Gi # Sets PV Volume
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
   hostPath:
     path: "/data/db-ammar" # Sets the volume's path
 ---
