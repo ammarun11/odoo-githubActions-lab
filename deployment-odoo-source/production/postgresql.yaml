@@ -39,7 +39,7 @@ spec:
       volumes:
         - name: postgredb
           persistentVolumeClaim:
-            claimName: postgresql-data-db-claim
+            claimName: postgresql-data-db-prd-claim
 ---
 apiVersion: v1
 kind: Service
