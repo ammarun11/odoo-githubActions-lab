@@ -63,7 +63,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: manifests
+          source_file: deployment-odoo-source
           destination_repo: ammarun11/odoo-githubActions-lab
           destination_branch: dev
           user_email: cintadamai46@gmail.com

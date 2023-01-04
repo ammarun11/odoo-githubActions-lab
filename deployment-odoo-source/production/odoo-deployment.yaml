@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: odoo
-          image: palopalepalo/odoo:16
+          image: palopalepalo/odoo:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8069
