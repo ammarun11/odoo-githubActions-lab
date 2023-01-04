@@ -98,7 +98,7 @@ jobs:
       - name: ArgoCD Deploy to Staging
         run: |
           argocd login --insecure  ${{ secrets.ARGOCD_SERVER }} --username  ${{ secrets.ARGOCD_USER }} --password  ${{ secrets.ARGOCD_PASS}}
-          argocd app create odoo-ammar-staging --project default --repo https://github.com/cusex-btech/github-actions-odoo.git --revision dev --path ./deployment-odoo-source/dev --dest-namespace odoo-ammar-staging --dest-server https://kubernetes.default.svc --upsert
+          argocd app create odoo-ammar-staging --project default --repo https://github.com/cusex-btech/github-actions-odoo.git --revision dev --path ./deployment-odoo-source/staging --dest-namespace odoo-ammar-staging --dest-server https://kubernetes.default.svc --upsert
           argocd --grpc-web app sync odoo-ammar-staging --force
           argocd --grpc-web app wait odoo-ammar-staging --timeout 600
 
