@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo The Staging PR was merged into Production
+        echo The Dev/Staging PR was merged into Production
 
   deploy-production:
     name: Deploy Production
